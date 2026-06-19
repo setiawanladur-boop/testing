@@ -802,13 +802,22 @@ body{font-family:'Inter',sans-serif;background:#0f1117;color:#e2e8f0;min-height:
 .pdf-pages.sidebar-open {
   margin-left: 280px;
 }
+.pdf-pages.components-sidebar-open {
+  margin-right: 300px;
+}
 
 @media (max-width: 1200px) {
   .sidebar {
     width: 240px;
   }
+  .components-sidebar {
+    width: 260px;
+  }
   .pdf-pages.sidebar-open {
     margin-left: 240px;
+  }
+  .pdf-pages.components-sidebar-open {
+    margin-right: 260px;
   }
   .sidebar-item {
     font-size: 11px;
@@ -968,11 +977,10 @@ body{font-family:'Inter',sans-serif;background:#0f1117;color:#e2e8f0;min-height:
 function toggleHamburgerMenu(e) {
   e.stopPropagation();
   const sidebar = document.getElementById('componentsSidebar');
-  if (!sidebar) return;
+  const pdfPages = document.getElementById('pdfPages');
+  if (!sidebar || !pdfPages) return;
   sidebar.classList.toggle('open');
-}
-
-document.addEventListener('click', function(e) {
+  pdfPages.classList.toggle('components-sidebar-open');
   const sidebar = document.getElementById('componentsSidebar');
   const btn = document.getElementById('hamburgerBtn');
   if (sidebar && sidebar.classList.contains('open') && !sidebar.contains(e.target) && !btn.contains(e.target)) {
@@ -3134,7 +3142,10 @@ window.addEventListener('load', function() {
   if (window.innerWidth > 768) {
     sidebar.classList.add('open');
     pdfPages.classList.add('sidebar-open');
-    if (components) components.classList.add('open');
+    if (components) {
+      components.classList.add('open');
+      pdfPages.classList.add('components-sidebar-open');
+    }
   }
   // Populate pages list
   if (typeof populateSidebarPages === 'function') populateSidebarPages();
@@ -3155,12 +3166,18 @@ window.addEventListener('resize', function() {
   if (window.innerWidth > 768) {
     sidebar.classList.add('open');
     pdfPages.classList.add('sidebar-open');
-    if (components) components.classList.add('open');
+    if (components) {
+      components.classList.add('open');
+      pdfPages.classList.add('components-sidebar-open');
+    }
     toggleBtn.classList.remove('show');
   } else {
     sidebar.classList.remove('open');
     pdfPages.classList.remove('sidebar-open');
-    if (components) components.classList.remove('open');
+    if (components) {
+      components.classList.remove('open');
+      pdfPages.classList.remove('components-sidebar-open');
+    }
     toggleBtn.classList.add('show');
   }
 });
